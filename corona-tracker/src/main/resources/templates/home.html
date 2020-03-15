@@ -22,7 +22,7 @@
 		<h1 class="display-4" th:text="${totlaCasesGlobe}"></h1>
 		<hr class="my-4">
 	
-		<p>Total number of cases since previous day</p>
+		<p>Total number of cases reported only on yesterday</p>
 		<h1 class="display-4" th:text="${totaDiffFromPrevious}"></h1>
 
 		
@@ -33,7 +33,7 @@
 			<th>Country</th>
 			<th>State</th>
 			<th>Total Cases</th>
-			<th>Diff From Previous Day</th>
+			<th>Yesterday Cases</th>
 		</tr>
 		<tr th:each="location : ${allStats}">
 			<td th:text="${location.country}"></td>

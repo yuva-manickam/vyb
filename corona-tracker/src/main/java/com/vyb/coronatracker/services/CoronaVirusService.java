@@ -14,6 +14,7 @@ import javax.annotation.PostConstruct;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.vyb.coronatracker.models.LocationStats;
@@ -29,6 +30,7 @@ public class CoronaVirusService {
 	}
 	
 	@PostConstruct
+	@Scheduled(cron = "0 0/30 * * * *")
 	public void fetchVirusData() throws IOException, InterruptedException {
 		
 		List<LocationStats> newStats = new ArrayList<>();
@@ -65,18 +67,12 @@ public class CoronaVirusService {
 			location.setTotalCases(latestCases);
 			location.setDiffFromPrevious(latestCases - previousCases);
 			//System.out.println(location);
-			newStats.add(location);
+			if (!csvrec1.equals("0")) {
+				newStats.add(location);
+			}
+			
 		}
 		this.allStats = newStats;
-		//System.out.println(httpResponse.body());
 	}
-	/*
-	 * 
-	 * public static void main(String[] args) throws IOException,
-	 * InterruptedException {
-	 * 
-	 * CoronaVirusService coronaVirusService = new CoronaVirusService();
-	 * coronaVirusService.fetchVirusData(); }
-	 */
 
 }
