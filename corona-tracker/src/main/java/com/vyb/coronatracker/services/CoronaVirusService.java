@@ -22,7 +22,7 @@ import com.vyb.coronatracker.models.LocationStats;
 @Service
 public class CoronaVirusService {
 
-	private String CORONA_VIRUS_DATA_URL = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv";
+	private String CORONA_VIRUS_DATA_URL = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv";
 	private List<LocationStats> allStats = new ArrayList<>();
 	
 	public List<LocationStats> getAllStats() {
