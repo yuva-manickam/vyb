@@ -2,12 +2,14 @@ package com.vyb.coronatracker.services;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.math.BigDecimal;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandler;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -30,7 +32,7 @@ public class CoronaVirusService {
 	}
 	
 	@PostConstruct
-	@Scheduled(cron = "0 0/30 * * * *")
+	@Scheduled(cron = "0 0/30 * * * ?")
 	public void fetchVirusData() throws IOException, InterruptedException {
 		
 		List<LocationStats> newStats = new ArrayList<>();
@@ -42,8 +44,7 @@ public class CoronaVirusService {
 		
 		StringReader csvBodyReader = new StringReader(httpResponse.body());
 		Iterable<CSVRecord> records = CSVFormat.DEFAULT.withFirstRecordAsHeader().parse(csvBodyReader);
-		System.out.println("record size=>"+records.toString().isEmpty());
-		System.out.println("record TEST=>"+records.toString().isEmpty());
+		System.out.println("=============================================================================== " + new Date());
 		for (CSVRecord csvRecord : records) {
 			System.out.println("csv =>"+csvRecord);
 			LocationStats location = new LocationStats();
@@ -67,6 +68,9 @@ public class CoronaVirusService {
 			int previousCases = Integer.parseInt(csvrec2);
 			location.setTotalCases(latestCases);
 			location.setDiffFromPrevious(latestCases - previousCases);
+			if(location.getTotalCases() > 0) {
+				location.setIncreaseInPercentage(Float.valueOf(location.getDiffFromPrevious())/Float.valueOf(location.getTotalCases())*100);
+			}	
 			//System.out.println(location);
 			if (!csvrec1.equals("0")) {
 				newStats.add(location);

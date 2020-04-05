@@ -1,5 +1,6 @@
 package com.vyb.coronatracker.controller;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ public class HomeController {
 	@GetMapping("/coronatracker")
 	public String home(Model model) {
 		List<LocationStats> allStats = coronoVirusService.getAllStats();
+		Collections.sort(allStats);
 		int totlaCasesGlobe = allStats.stream().mapToInt(stat -> stat.getTotalCases()).sum();
 		int totaDiffFromPrevious = allStats.stream().mapToInt(stat -> stat.getDiffFromPrevious()).sum();
 		model.addAttribute("allStats",allStats);

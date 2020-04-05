@@ -34,12 +34,14 @@
 			<th>State</th>
 			<th>Total Cases</th>
 			<th>Yesterday Cases</th>
+			<th>Rate Of Increase</th>
 		</tr>
 		<tr th:each="location : ${allStats}">
 			<td th:text="${location.country}"></td>
 			<td th:text="${location.state}"></td>
 			<td th:text="${location.totalCases}">0</td>
 			<td th:text="${location.diffFromPrevious}">0</td>
+			<td th:text="${location.increaseInPercentage}">0</td>
 		</tr>
 	</table>
 	</div>
